@@ -62,6 +62,32 @@ while True:
                 # Koordinaten anzeigen
                 cv2.putText(frame, f"({cx}, {cy})", (cx + 10, cy),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                
+                ## Steuerungslogik basierend auf der Position des Objekts
+                height, width, _ = frame.shape
+                center_x = width // 2
+
+                # Toleranz (wie genau "mittig" sein muss)
+                tolerance = 50
+
+                # Entscheidungslogik
+                if cx < center_x - tolerance:
+                    direction = "LEFT"
+                elif cx > center_x + tolerance:
+                    direction = "RIGHT"
+                else:
+                    direction = "FORWARD"
+                    
+                # Mittellinie zeichnen
+                cv2.line(frame, (center_x, 0), (center_x, height), (255, 255, 255), 1)
+
+                # Toleranzbereich anzeigen
+                cv2.line(frame, (center_x - tolerance, 0), (center_x - tolerance, height), (100, 100, 100), 1)
+                cv2.line(frame, (center_x + tolerance, 0), (center_x + tolerance, height), (100, 100, 100), 1)
+
+                # Richtung anzeigen
+                cv2.putText(frame, direction, (50, 50),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
 
     # Anzeigen

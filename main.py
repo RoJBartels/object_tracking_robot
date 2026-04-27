@@ -44,7 +44,7 @@ while True:
         largest_contour = max(contours, key=cv2.contourArea)
 
         # kleine Objekte ignorieren (Rauschen)
-        if cv2.contourArea(largest_contour) > 500:
+        if cv2.contourArea(largest_contour) > 1000:
 
             # Kreis um Objekt
             (x, y), radius = cv2.minEnclosingCircle(largest_contour)

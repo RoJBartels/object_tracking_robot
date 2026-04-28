@@ -1,16 +1,18 @@
-# 🟥 Object Following Robot (Simulation)
+# 🟥 Real-Time Object Following Robot (OpenCV, Python)
 
-A minimal computer vision project that detects a colored object in a camera feed and simulates a robot following it. Built in < 1 day as a rapid robotics prototype.
+A minimal robotics prototype that detects a colored object in a webcam feed, tracks its position, and simulates movement decisions (left/right/forward).
+
+Built as a fast, practical introduction to perception-driven robotics systems.
+
+---
 
 ## 🚀 Project Goal
 
-Build a simple perception-to-action pipeline:
+Implement a simple **perception → decision pipeline**:
 
-* Detect an object (based on color) using a camera
-* Estimate its position in the image
-* Simulate movement decisions (left/right/forward)
-
-This project focuses on **fast prototyping in robotics without heavy frameworks like ROS**.
+* Detect an object using color segmentation (HSV)
+* Compute its position in image space
+* Simulate robot movement based on object location
 
 ---
 
@@ -24,13 +26,18 @@ This project focuses on **fast prototyping in robotics without heavy frameworks 
 
 ## 📸 Features
 
-* Real-time webcam feed
-* Color-based object detection (HSV space)
-* Object highlighting via mask
-* (Next steps)
+* Real-time webcam processing
+* Robust color detection using HSV color space
+* Object tracking via contour detection
+* Center point (centroid) calculation using image moments
+* Visual feedback:
 
-  * Object position tracking
-  * Movement logic simulation
+  * Bounding circle
+  * Center point
+  * Tracking coordinates
+* Movement simulation:
+
+  * LEFT / RIGHT / FORWARD decision logic
 
 ---
 
@@ -51,16 +58,34 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Press `ESC` to exit the application.
+Press `ESC` to exit.
 
 ---
 
 ## ⚙️ How It Works
 
-1. Capture webcam frames using OpenCV
-2. Convert image from BGR to HSV
-3. Apply color threshold to detect red objects
-4. Create a mask and overlay result
+### 1. Color Detection
+
+* Convert frame from BGR → HSV
+* Apply threshold to isolate red regions
+* Generate binary mask
+
+### 2. Object Tracking
+
+* Extract contours from mask
+* Select largest contour
+* Compute:
+
+  * enclosing circle
+  * centroid via image moments
+
+### 3. Decision Logic
+
+Based on object position:
+
+* LEFT → object is left of center
+* RIGHT → object is right of center
+* FORWARD → object is centered
 
 ---
 
@@ -68,47 +93,60 @@ Press `ESC` to exit the application.
 
 Hold a red object (e.g. a cup or ball) in front of your webcam.
 
-* The mask highlights detected regions
-* The processed image shows only the detected object
+You will see:
+
+* A circle around the object
+* A dot marking its center
+* Live coordinates
+* Simulated movement direction
 
 ---
 
-## 🧩 Next Steps
+## 📊 System Pipeline
 
-* [ ] Detect object center (x, y)
-* [ ] Draw bounding circle
-* [ ] Add simple control logic:
-
-  * Move left/right if object is off-center
-  * Move forward if centered
-* [ ] Simulate robot movement
+```
+Camera → Color Segmentation → Contour Detection → Centroid → Decision Logic
+```
 
 ---
 
-## 🎯 Why This Project?
+## 🧩 Key Concepts Demonstrated
+
+* Image processing with OpenCV
+* HSV color space vs RGB
+* Contour-based object detection
+* Centroid calculation using moments
+* Basic control logic in robotics
+
+---
+
+## 🧪 Next Steps
+
+* [ ] Add distance estimation (based on object size)
+* [ ] Smooth movement (reduce jitter)
+* [ ] Replace rule-based logic with PID controller
+* [ ] Integrate with real hardware (e.g. Raspberry Pi + motors)
+* [ ] Add ROS for modular system design
+
+---
+
+## 🎯 Why This Project Matters
 
 This project demonstrates:
 
-* Practical computer vision skills
-* Understanding of perception pipelines in robotics
-* Ability to build working prototypes quickly
-
----
-
-## 📌 Future Extensions
-
-* Replace color detection with ML-based object detection
-* Integrate with a real robot (e.g. Raspberry Pi + motors)
-* Add ROS for modular robotics architecture
+* Ability to build **end-to-end working systems**
+* Understanding of **robot perception pipelines**
+* Practical use of computer vision for control tasks
+* Rapid prototyping skills
 
 ---
 
 ## 🧑‍💻 Author
 
-Robin Jens Bartels
+Your Name
 
 ---
 
 ## 📄 License
 
-MIT (or choose your preferred license)
+MIT (or your choice)

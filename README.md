@@ -108,6 +108,10 @@ You will see:
 Camera → Color Segmentation → Contour Detection → Centroid → Decision Logic
 ```
 
+## Demo
+
+![Tracking Demo](media/Object_Tracking_Demo.gif)
+
 ---
 
 ## 🧩 Key Concepts Demonstrated
